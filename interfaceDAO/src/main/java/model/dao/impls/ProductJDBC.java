@@ -4,9 +4,7 @@ import DB.ConnectionDB;
 import model.dao.ProductDAO;
 import model.entity.Product;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class ProductJDBC implements ProductDAO {
@@ -31,6 +29,7 @@ public class ProductJDBC implements ProductDAO {
             ps.setDouble(3, product.getPrice());
             ps.executeUpdate();
 
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -43,7 +42,25 @@ public class ProductJDBC implements ProductDAO {
 
     @Override
     public Product findById(Integer id) {
-        return null;
+        String sql = "SELECT name FROM product WHERE id = ?";
+        Product product = new Product();
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+
+        conn = ConnectionDB.getConnection();
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                product.setName(rs.getString("name"));
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override

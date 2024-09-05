@@ -10,5 +10,8 @@ public class Program {
         Product product = new Product("Joca", "bolo", 12.9);
         ProductDAO productDAO = new ProductJDBC();
         productDAO.insert(product);
+
+        ProductDAO productDAO2 = new ProductJDBC();
+        System.out.println(productDAO2.findById(2).getName());
     }
 }
