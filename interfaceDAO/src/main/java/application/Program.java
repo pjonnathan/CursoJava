@@ -13,5 +13,8 @@ public class Program {
 
         ProductDAO productDAO2 = new ProductJDBC();
         System.out.println(productDAO2.findById(2).getName());
+
+        ProductDAO productDAO3 = new ProductJDBC();
+        productDAO3.delete(2);
     }
 }

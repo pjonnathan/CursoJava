@@ -10,6 +10,20 @@ import java.util.List;
 public class ProductJDBC implements ProductDAO {
     @Override
     public void delete(Integer id) {
+        String sql = "DELETE FROM product WHERE id = ?";
+        PreparedStatement ps = null;
+
+        Connection conn = null;
+        conn = ConnectionDB.getConnection();
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -56,7 +70,7 @@ public class ProductJDBC implements ProductDAO {
             while (rs.next()) {
                 product.setName(rs.getString("name"));
             }
-            
+            return product;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
