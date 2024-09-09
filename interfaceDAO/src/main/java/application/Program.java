@@ -16,5 +16,8 @@ public class Program {
 
         ProductDAO productDAO3 = new ProductJDBC();
         productDAO3.delete(2);
+
+        ProductDAO productDAO1 = new ProductJDBC();
+        productDAO1.update(product, 4);
     }
 }
