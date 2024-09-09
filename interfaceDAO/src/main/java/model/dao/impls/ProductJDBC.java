@@ -50,8 +50,25 @@ public class ProductJDBC implements ProductDAO {
     }
 
     @Override
-    public void update(Product product) {
+    public void update(Product product, int id) {
+        String sql = "UPDATE product SET name = ?, description = ?, price = ? WHERE id = ?";
 
+        PreparedStatement ps = null;
+        Connection conn = null;
+        conn = ConnectionDB.getConnection();
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, product.getName());
+            ps.setString(2, product.getDescription());
+            ps.setDouble(3, product.getPrice());
+            ps.setInt(4, id);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -77,8 +94,4 @@ public class ProductJDBC implements ProductDAO {
 
     }
 
-    @Override
-    public List<Product> findAll() {
-        return List.of();
-    }
 }
